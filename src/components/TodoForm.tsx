@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 interface TodoFormProps {
-  onAdd(title: string): void;
+  onAdd: (title: string) => void;
 }
 
 export const TodoForm: React.FC<TodoFormProps> = (props) => {
@@ -19,15 +19,13 @@ export const TodoForm: React.FC<TodoFormProps> = (props) => {
 
   return (
     <div className="todo__form">
-      <label className="todo__form-label">
-        <input
-          value={title}
-          onChange={changeHandler}
-          type="text"
-          placeholder="What to do next?"
-          className="todo__form-input"
-        />
-      </label>
+      <input
+        value={title}
+        onChange={changeHandler}
+        type="text"
+        placeholder="What to do next?"
+        className="todo__form-input"
+      />
       <button onClick={clickHandler} className="todo__form-button">
         Add
       </button>
