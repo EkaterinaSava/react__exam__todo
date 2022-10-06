@@ -10,28 +10,32 @@ interface TodoListProps {
 
 export const TodoList: React.FC<TodoListProps> = ({ todos, onToggle, onDelete, onEditComplete }) => {
   const [editableTodo , setEditableTodo] = useState<ITodo | null>(null);
-  const [value, setValue] = useState<string>('');
+  const [title, setTitle] = useState<string>('');
 
   if (todos.length === 0) {
     return <p className="todo__empty">Add your first todo!</p>
   }
 
-  const onEditClickHandler = (todo: ITodo) => {
+  const onChangeInput = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setTitle(event.target.value);
+  }
+
+  const onEdit = (todo: ITodo) => {
     if (!editableTodo) {
       setEditableTodo(todo);
-      setValue(todo.title);
+      setTitle(todo.title);
     }
   }
 
-  const onSaveClickHandler = () => {
+  const onSave = () => {
     if (editableTodo) {
-      onEditComplete(editableTodo.id, value);
+      onEditComplete(editableTodo.id, title);
     }
     setEditableTodo(null);
   }
 
   return (
-    <ul>
+    <ul className="todo__list">
       {todos.map(todo => {
         const isEditing = todo.id === editableTodo?.id;
 
@@ -47,16 +51,15 @@ export const TodoList: React.FC<TodoListProps> = ({ todos, onToggle, onDelete, o
 
               {
                 isEditing ?
-                <input type="text" placeholder='Edit todo' value={value} onChange={(e) => setValue(e.target.value)} />
+                <input className="todo__item-input" type="text" placeholder='Edit todo' value={title} onChange={onChangeInput} />
                 : <span className="todo__item-text">{todo.title}</span>
               }
-              
             </label>
 
             {
               isEditing ?
-              <div className="todo__item-save" onClick={() => onSaveClickHandler()}>save</div>
-              : <div className="todo__item-edit" onClick={() => onEditClickHandler(todo)}></div>
+              <div className="todo__item-save" onClick={() => onSave()}></div>
+              : <div className="todo__item-edit" onClick={() => onEdit(todo)}></div>
             }
 
             <div className="todo__item-delete" onClick={() => onDelete(todo.id)}></div>
