@@ -60,7 +60,7 @@ const App: React.FC = () => {
 
   return (
     <div className="todo__container">
-      <h1>To Do List</h1>
+      <h1 className="todo__heading">To Do List</h1>
 
       <TodoForm onAdd={addHandler}/>
       <TodoList

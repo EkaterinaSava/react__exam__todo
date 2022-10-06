@@ -25,9 +25,10 @@ export const TodoForm: React.FC<TodoFormProps> = (props) => {
           onChange={changeHandler}
           type="text"
           placeholder="What to do next?"
+          className="todo__form-input"
         />
       </label>
-      <button onClick={clickHandler}>
+      <button onClick={clickHandler} className="todo__form-button">
         Add
       </button>
     </div>
