@@ -8,10 +8,10 @@ export const TodoForm: React.FC<TodoFormProps> = (props) => {
   const [title, setTitle] = useState<string>('')
 
   const changeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setTitle(event.target.value)
+    setTitle(event.target.value);
   }
 
-  const clickHandler = (event: any) => {
+  const clickHandler = (event: React.MouseEvent<HTMLElement>) => {
     event.preventDefault();
     props.onAdd(title);
     setTitle('');

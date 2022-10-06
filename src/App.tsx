@@ -6,11 +6,7 @@ import { ITodo } from './interfaces';
 
 
 const App: React.FC = () => {
-  const [todos, setTodos] = useState<ITodo[]>([]);
-
-  useEffect(() => {
-    const saved = JSON.parse(localStorage.getItem('todos') || '[]') as ITodo[];
-  }, []);
+  const [todos, setTodos] = useState<ITodo[]>(JSON.parse(localStorage.getItem('todos') || '[]') as ITodo[]);
 
   useEffect(() => {
     localStorage.setItem('todos', JSON.stringify(todos));
@@ -48,6 +44,20 @@ const App: React.FC = () => {
     setTodos(updatedTodo);
   }
 
+  const editCompleteHandler = (id: number, title: string) => {
+    const updatedTodos = todos.map((todo) => {
+      if (todo.id === id) {
+        return {
+          ...todo,
+          title: title,
+        };
+      }
+      return todo;
+    });
+
+    setTodos(updatedTodos);
+  }
+
   return (
     <div className="todo__container">
       <h1>To Do List</h1>
@@ -57,6 +67,7 @@ const App: React.FC = () => {
         todos={todos}
         onToggle={toggleHandler}
         onDelete={removeHandler}
+        onEditComplete={editCompleteHandler}
       />
     </div>
   );
