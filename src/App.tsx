@@ -1,8 +1,9 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import './App.css';
 import { TodoForm } from './components/TodoForm';
 import { TodoList } from './components/TodoList';
 import { TodoFilter } from './components/TodoFilter';
+import { TodoProgress } from './components/TodoProgress';
 import { ITodo } from './interfaces';
 import { filters } from './constance';
 
@@ -67,6 +68,8 @@ const App: React.FC = () => {
 
   const visibleTodos = todos.filter(filters[filter as keyof typeof filters]);
 
+  const completedTodosLength = useMemo(() => todos.filter(filters.Completed).length, [todos]);
+
   return (
     <div className="todo__container">
       <h1 className="todo__heading">To Do List</h1>
@@ -75,7 +78,7 @@ const App: React.FC = () => {
 
       <div className="todo__nav">
         <TodoFilter onFilter={changeFilterHandler} />
-        {todos.length > 0 && <div className="todo__progress">Your progress: {todos.filter(filters.Completed).length} / {todos.length}</div>}
+        {todos.length > 0 && <TodoProgress progressCompleted={completedTodosLength} progressFull={todos.length}/>}
       </div>
 
       <TodoList

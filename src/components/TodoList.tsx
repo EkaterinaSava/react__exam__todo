@@ -49,6 +49,8 @@ export const TodoList: React.FC<TodoListProps> = ({ todos, onToggle, onDelete, o
                 onChange={() => onToggle(todo.id)}
               />
 
+              <div className="todo__item-checkbox-icon"></div>
+
               {
                 isEditing ?
                 <input className="todo__item-input" type="text" placeholder='Edit todo' value={title} onChange={onChangeInput} />
