@@ -6,6 +6,7 @@ import { TodoFilter } from './components/TodoFilter';
 import { TodoProgress } from './components/TodoProgress';
 import { ITodo } from './interfaces';
 import { filters } from './constance';
+import { idText } from 'typescript';
 
 const App: React.FC = () => {
   const [todos, setTodos] = useState<ITodo[]>(JSON.parse(localStorage.getItem('todos') || '[]') as ITodo[]);
@@ -66,9 +67,18 @@ const App: React.FC = () => {
     setFilter(filter);
   }
 
-  const visibleTodos = todos.filter(filters[filter as keyof typeof filters]);
+  const visibleTodos = useMemo(() => todos.filter(filters[filter as keyof typeof filters]), [todos]);
 
-  const completedTodosLength = useMemo(() => todos.filter(filters.Completed).length, [todos]);
+  const completedTodos = useMemo(() => todos.filter(filters.Completed), [todos]);
+
+  const removeAllCompleted = () => {
+    const todosAfterRemoveCompleted = todos.filter((todo) => {
+      return todo.complete !== true;
+    });
+    
+    setTodos(todosAfterRemoveCompleted);
+  }
+
 
   return (
     <div className="todo__container">
@@ -76,9 +86,11 @@ const App: React.FC = () => {
 
       <TodoForm onAdd={addHandler}/>
 
+      <button className="todo__remove-completed" onClick={removeAllCompleted}>Remove all completed</button>
+
       <div className="todo__nav">
         <TodoFilter onFilter={changeFilterHandler} />
-        {todos.length > 0 && <TodoProgress progressCompleted={completedTodosLength} progressFull={todos.length}/>}
+        {todos.length > 0 && <TodoProgress progressCompleted={completedTodos.length} progressFull={todos.length}/>}
       </div>
 
       <TodoList

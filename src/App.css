@@ -1,7 +1,7 @@
 /* ----------------------------------------------------------------------------------------- */
 .todo__container {
   width: 100%;
-  max-width: 75%;
+  max-width: 85%;
   color: rgba(22, 76, 100, 1);
   font-weight: 500;
   text-align: center;
@@ -72,6 +72,30 @@
 }
 
 .todo__form-button:hover {
+  box-shadow: 0 2px 4px 0 rgba(22, 76, 100, 0.25);
+}
+
+
+/* ----------------------------------------------------------------------------------------- */
+.todo__remove-completed {
+  height: 36px;
+  width: 264px;
+  font-family: 'Poppins';
+  color: rgba(206, 235, 123, 1);
+  font-weight: 500;
+  text-align: center;
+  background-color: rgba(22, 76, 100, .85);
+  border-radius: 4px;
+  border: 0;
+  padding: 8px 16px;
+  margin: 0 auto 32px;
+  box-sizing: border-box;
+  transition: background-color .2s ease-out, box-shadow .2s ease-out;
+  cursor: pointer;
+}
+
+.todo__remove-completed:hover {
+  background-color: rgba(22, 76, 100, 1);
   box-shadow: 0 2px 4px 0 rgba(22, 76, 100, 0.25);
 }
 
